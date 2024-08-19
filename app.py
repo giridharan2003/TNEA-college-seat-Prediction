@@ -22,7 +22,6 @@ def getvalue():
         value_25 = 25  # Replace with the appropriate value
         value_50 = 50  # Replace with the appropriate value
         value_75 = 75  # Replace with the appropriate value
-
         interpolated_percentages = {}
 
         df2021 = df[df['Year'] == 2021].reset_index(drop=True).set_index('Branch Code')
