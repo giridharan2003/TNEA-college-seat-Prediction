@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="title">DETAILS</div>
+
+    <div class="content">
+
+      <form method="POST" action="/">
+
+        <div class="user-details">
+
+            <div class="input-box" id="FULL NAME">            <!-- FULL NAME -->
+              <label class="details">FULL NAME</label>  
+              <input type="text" id="fullName" placeholder="Enter your name" required>
+            </div>
+
+            <div class="input-box" id="MATHEMATICS">            <!-- MATHEMATICS -->
+              <label class="details">MATHEMATICS</label>
+              <input type="text" id="mathMarks" placeholder="Enter your Mark" required>
+            </div>
+
+            <div class="input-box" id="COLLEGE">            <!-- COLLEGE -->
+              <label for="college">COLLEGE</label>
+              <input type="text" id="college" name="college" list="collegeList" placeholder="Enter the College" required>
+              <datalist id="collegeList">
+                <option value="KNOWLEDGE INSTITUTE OF TECHNOLOGY">
+                <option value="SONA COLLEGE OF TECHNOLOGY">
+                <option value="GOVERNMENT COLLEGE OF ENGINEERING">
+                <option value="DHIRAJLAL GANDHI COLLEGE OF TECHNOLOGY">
+              </datalist>
+            </div>
+
+            <!-- <div class="input-box">             COURSE
+              <label for="course">COURSE</label>
+              <input type="text" id="course" list="courselist" placeholder="Enter the course" required>
+              <datalist id="courselist">
+                <option value="INFORMATION TECHNOLOGY">
+                <option value="COMPUTER SCIENCE AND ENGINEERING">
+                <option value="CIVIL ENGINEERING">
+              </datalist>
+            </div> -->
+            
+            
+            <div class="input-box" id="PHYSICS">            <!-- PHYSICS -->
+              <label class="details">PHYSICS</label>
+              <input type="text" id="physicsMarks" placeholder="Enter your Mark" required>
+            </div>
+
+            <div class="input-box" id="CATEGORY">            <!-- CATEGORY -->
+              <label for="category">CATEGORY</label>
+              <input type="text" id="category" name="category" list="categoryList" placeholder="Enter the category" required>
+              <datalist id="categoryList">
+                <option value="BC">
+                <option value="MBC">
+                <option value="OC">
+                <option value="SC">
+              </datalist>
+            </div>
+
+            <div class="input-box" id="CHEMISTRY">            <!-- CHEMISTRY -->
+              <label class="details">CHEMISTRY</label>
+              <input type="text" id="chemistryMarks" placeholder="Enter your Mark" required>
+            </div>
+
+        </div>
+
+        <div class="button">
+          <input type="submit" value="SUBMIT" onclick="return storeValues()">
+        </div>
+
+        <input type="hidden" name="cutoff" id="hiddenCutoff" value="">
+
+      </form>
+    </div>
+  </div>
+
+  <script>
+
+    function validateMarks(inputElement) {
+      var marks = parseFloat(inputElement.value.replace(',', '.'));
+
+      if (isNaN(marks) || marks < 1 || marks > 100) {
+        alert("Marks must be a number between 1 and 100.");
+        inputElement.value = ""; // Clear the input
+        return false;
+      }
+
+      return true;
+    }
+
+    function calculateCutoff() {
+      var mathMarks = parseFloat(document.getElementById("mathMarks").value.replace(',', '.'));
+      var physicsMarks = parseFloat(document.getElementById("physicsMarks").value.replace(',', '.'));
+      var chemistryMarks = parseFloat(document.getElementById("chemistryMarks").value.replace(',', '.'));
+
+      if (isNaN(mathMarks) || isNaN(physicsMarks) || isNaN(chemistryMarks)) {
+        return "Invalid";
+      }
+
+      var cutoff = mathMarks + (physicsMarks + chemistryMarks) / 2;
+      return cutoff.toFixed(1); // Round to two decimal places
+    }
+
+    function validateForm() {
+      var mathMarks = document.getElementById("mathMarks");
+      var physicsMarks = document.getElementById("physicsMarks");
+      var chemistryMarks = document.getElementById("chemistryMarks");
+
+      return (
+        validateMarks(mathMarks) &&
+        validateMarks(physicsMarks) &&
+        validateMarks(chemistryMarks)
+      );
+    }
+
+    function storeValues() {
+
+      var fullName = document.getElementById("fullName").value;
+      var college = document.getElementById("college").value;
+      var mathMarks = document.getElementById("mathMarks").value;
+      var physicsMarks = document.getElementById("physicsMarks").value;
+      var category = document.getElementById("category").value;
+      var chemistryMarks = document.getElementById("chemistryMarks").value;
+
+      var cutoff = calculateCutoff();
+
+      document.getElementById("hiddenCutoff").value = cutoff;
+
+      sessionStorage.setItem("cutoff",cutoff)
+      sessionStorage.setItem("college",college)
+
+      return validateForm();
+}
+  
+  </script>
+
+</body>
+
+</html>
